@@ -1,0 +1,77 @@
+[gd_scene load_steps=3 format=3 uid="uid://reijsmbx1jsu"]
+
+[ext_resource type="Script" path="res://screen/lobby/lobby.gd" id="1_386x1"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_wlbk3"]
+properties/0/path = NodePath(".:disabled")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[node name="Lobby" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_386x1")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://test/test.tscn")
+spawn_path = NodePath("../VBoxContainer/PlayerList")
+spawn_limit = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LobbyId" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Lobby ID"
+
+[node name="PlayerList" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Buttons" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+alignment = 1
+
+[node name="VSeparator3" type="VSeparator" parent="VBoxContainer/Buttons"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Leave" type="Button" parent="VBoxContainer/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Leave"
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/Buttons"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Start" type="Button" parent="VBoxContainer/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "Start"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="VBoxContainer/Buttons/Start"]
+replication_config = SubResource("SceneReplicationConfig_wlbk3")
+
+[node name="VSeparator2" type="VSeparator" parent="VBoxContainer/Buttons"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
