@@ -5,7 +5,7 @@ extends Control
 @onready var create_button := $CenterContainer/VBoxContainer/Create
 
 var lobby_template: PackedScene = preload("res://screen/lobby/Lobby.tscn")
-
+	
 func _ready() -> void:
 	if (OS.get_cmdline_args().has("--server=true")):
 		var mp = multiplayer
@@ -16,11 +16,12 @@ func _ready() -> void:
 		$CenterContainer.queue_free()
 	else:
 		var mp = multiplayer
-		print(multiplayer)
 		var peer = ENetMultiplayerPeer.new()
-		mp.connected_to_server.connect(func(): print("connected to server"));
 		peer.create_client("127.0.0.1", 7000)
 		mp.multiplayer_peer = peer
+		
+func _exit_tree() -> void:
+	get_tree().get_multiplayer("/root/LandingScreen").multiplayer_peer = null
 
 func _on_join_button_up() -> void:
 	var lobby_id = lobby_id_input.text
@@ -35,29 +36,40 @@ func _on_create_button_up() -> void:
 func create_lobby(peer_id: int):
 	var lobby_id = randi_range(64435, 64535)
 	var lobby_mp = SceneMultiplayer.new()
-	get_tree().set_multiplayer(lobby_mp, str(get_path()) + "/" + str(lobby_id))
+	get_tree().set_multiplayer(lobby_mp, str(get_tree().current_scene.get_path()) + "/" + str(lobby_id))
 	var lobby_instance = lobby_template.instantiate()
 	lobby_instance.name = str(lobby_id)
 	lobby_instance.set_id(str(lobby_id))
-	add_child(lobby_instance)
+	get_tree().current_scene.add_child(lobby_instance)
 	var lobby_peer = ENetMultiplayerPeer.new()
 	lobby_peer.create_server(lobby_id)
 	lobby_mp.multiplayer_peer = lobby_peer
-	print("Lobby is ready with ID: " + str(lobby_id))
 	load_lobby.rpc_id(peer_id, lobby_id)
 
 # Runs on clients
 @rpc("authority", "call_remote", "reliable")
 func load_lobby(lobby_id: int):
-	$CenterContainer.queue_free()
-	var lobby_instance := lobby_template.instantiate()
-	lobby_instance.name = str(lobby_id)
-	lobby_instance.set_id(str(lobby_id))
-	add_child(lobby_instance)
-	
 	var lobby_mp = SceneMultiplayer.new()
-	lobby_mp.connected_to_server.connect(func(): lobby_instance.player_joined.rpc_id(1))
-	get_tree().set_multiplayer(lobby_mp, lobby_instance.get_path())
+	get_tree().set_multiplayer(lobby_mp, 
+		str(get_tree().current_scene.get_path()) + "/" + str(lobby_id))
 	var lobby_peer = ENetMultiplayerPeer.new()
-	lobby_peer.create_client("127.0.0.1", lobby_id)
-	lobby_mp.multiplayer_peer = lobby_peer
+	var result = lobby_peer.create_client("127.0.0.1", lobby_id)
+
+	if result != OK:
+		print("This one")
+		_invalid_lobby()
+	else:
+		lobby_mp.multiplayer_peer = lobby_peer
+		lobby_mp.connected_to_server.connect(
+			func(): 
+				get_tree().current_scene.get_node("LandingScreen").queue_free()
+				var lobby_instance := lobby_template.instantiate()
+				lobby_instance.name = str(lobby_id)
+				lobby_instance.set_id(str(lobby_id))
+				get_tree().current_scene.add_child(lobby_instance)
+				lobby_instance.player_joined.rpc_id(1, lobby_peer.get_unique_id())
+		)
+		lobby_mp.connection_failed.connect(_invalid_lobby)
+
+func _invalid_lobby() -> void:
+	print("Bad lobby")

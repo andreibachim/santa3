@@ -1,11 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://reijsmbx1jsu"]
+[gd_scene load_steps=2 format=3 uid="uid://reijsmbx1jsu"]
 
 [ext_resource type="Script" path="res://screen/lobby/lobby.gd" id="1_386x1"]
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_wlbk3"]
-properties/0/path = NodePath(".:disabled")
-properties/0/spawn = true
-properties/0/replication_mode = 1
 
 [node name="Lobby" type="Control"]
 layout_mode = 3
@@ -17,7 +12,7 @@ grow_vertical = 2
 script = ExtResource("1_386x1")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://test/test.tscn")
+_spawnable_scenes = PackedStringArray("res://ui/PlayerName.tscn")
 spawn_path = NodePath("../VBoxContainer/PlayerList")
 spawn_limit = 4
 
@@ -64,9 +59,6 @@ size_flags_horizontal = 3
 disabled = true
 text = "Start"
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="VBoxContainer/Buttons/Start"]
-replication_config = SubResource("SceneReplicationConfig_wlbk3")
-
 [node name="VSeparator2" type="VSeparator" parent="VBoxContainer/Buttons"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
@@ -75,3 +67,5 @@ theme_override_constants/separation = 15
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
+
+[connection signal="button_up" from="VBoxContainer/Buttons/Leave" to="." method="_on_leave_button_up"]

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cyn7jeemev672"]
+
+[ext_resource type="Script" path="res://santa_3.gd" id="1_bpv1l"]
+
+[node name="Santa3" type="Node"]
+script = ExtResource("1_bpv1l")
