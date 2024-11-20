@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://cggeh34coe4qt"]
+
+[ext_resource type="Script" path="res://world.gd" id="1_ucg3t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a0o8r"]
+size = Vector2(10000, 40)
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_ucg3t")
+
+[node name="ServerFlag" type="Label" parent="."]
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0
+text = "SERVER"
+
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2(5000, 160)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+shape = SubResource("RectangleShape2D_a0o8r")
+
+[node name="Players" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(76, 61)
+
+[node name="Avatars" type="Node2D" parent="."]
+position = Vector2(76, 61)
+
+[node name="AvatarsSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://avatar/Avatar.tscn")
+spawn_path = NodePath("../Avatars")
+
+[node name="Controllers" type="Node" parent="."]
+
+[node name="ControllerSpawner" type="MultiplayerSpawner" parent="Controllers"]
+_spawnable_scenes = PackedStringArray("res://controller/Controller.tscn")
+spawn_path = NodePath("..")

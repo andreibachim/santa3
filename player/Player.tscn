@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://ojx6sp1sa4er"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_lps45"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xqsjo"]
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 0
+script = ExtResource("1_lps45")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_xqsjo")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
+remote_path = NodePath("..")
+update_rotation = false
+update_scale = false
+
+[connection signal="jump" from="." to="." method="_on_jump"]
+[connection signal="stop_jump" from="." to="." method="_on_stop_jump"]
