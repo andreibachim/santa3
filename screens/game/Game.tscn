@@ -1,0 +1,97 @@
+[gd_scene load_steps=6 format=3 uid="uid://cggeh34coe4qt"]
+
+[ext_resource type="Script" path="res://screens/game/game.gd" id="1_jps0w"]
+[ext_resource type="PackedScene" uid="uid://qxqjpmnblj6s" path="res://ui/lobby/Lobby.tscn" id="2_s6vv1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a0o8r"]
+size = Vector2(18500, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bc8r8"]
+size = Vector2(20, 261)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_7ekuq"]
+properties/0/path = NodePath(".:text")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_jps0w")
+
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2(6952, 160)
+scale = Vector2(1, 0.694)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+position = Vector2(2298, 8.64553)
+shape = SubResource("RectangleShape2D_a0o8r")
+
+[node name="Barrier" type="StaticBody2D" parent="."]
+position = Vector2(83, 7)
+metadata/_edit_group_ = true
+
+[node name="Shape" type="CollisionShape2D" parent="Barrier"]
+position = Vector2(0, 84.5)
+shape = SubResource("RectangleShape2D_bc8r8")
+
+[node name="Players" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(29, 61)
+
+[node name="Avatars" type="Node2D" parent="."]
+position = Vector2(29, 61)
+
+[node name="AvatarsSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://avatar/Avatar.tscn")
+spawn_path = NodePath("../Avatars")
+
+[node name="Controllers" type="Node" parent="."]
+
+[node name="ControllerSpawner" type="MultiplayerSpawner" parent="Controllers"]
+_spawnable_scenes = PackedStringArray("res://controller/Controller.tscn")
+spawn_path = NodePath("..")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 320.0
+offset_bottom = 180.0
+
+[node name="GameUILayer" type="CanvasLayer" parent="Control"]
+visible = false
+
+[node name="Countdown" type="Control" parent="Control/GameUILayer"]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 50.0
+grow_horizontal = 2
+
+[node name="Panel" type="Panel" parent="Control/GameUILayer/Countdown"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Control/GameUILayer/Countdown/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CountdownLabel" type="Label" parent="Control/GameUILayer/Countdown/Panel/CenterContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "5"
+
+[node name="Synchronizer" type="MultiplayerSynchronizer" parent="Control/GameUILayer/Countdown/Panel/CenterContainer/CountdownLabel"]
+replication_config = SubResource("SceneReplicationConfig_7ekuq")
+
+[node name="Lobby" parent="Control" instance=ExtResource("2_s6vv1")]
+visible = false
+layout_mode = 1
+
+[connection signal="player_ready" from="Control/Lobby" to="." method="player_ready"]

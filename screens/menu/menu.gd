@@ -6,7 +6,7 @@ extends Control
 @onready var nickname = $CenterContainer/VBoxContainer/MarginContainer/HBoxContainer/Nickname
 @onready var join_lobby_dialog := $CenterContainer/JoinLobbyDialog
 @onready var lobby_id_edit := $CenterContainer/JoinLobbyDialog/LobbyId
-var game_template := preload("res://screens/game/game.tscn")
+var game_template := preload("res://screens/game/Game.tscn")
 
 func _ready() -> void:
 	if OS.get_cmdline_args().has("server"):
@@ -68,3 +68,4 @@ func join_game(id: int) -> void:
 func _on_join_pressed() -> void:
 	join.release_focus()
 	join_lobby_dialog.popup()
+	lobby_id_edit.grab_focus()

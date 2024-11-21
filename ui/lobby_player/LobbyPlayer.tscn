@@ -1,11 +1,31 @@
-[gd_scene load_steps=2 format=3 uid="uid://dnw5k1u875c0x"]
+[gd_scene load_steps=3 format=3 uid="uid://dnw5k1u875c0x"]
+
+[ext_resource type="Script" path="res://ui/lobby_player/lobby_player.gd" id="1_cnglf"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_oee35"]
 properties/0/path = NodePath(".:text")
 properties/0/spawn = true
 properties/0/replication_mode = 2
+properties/1/path = NodePath(".:color")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath(".:is_ready")
+properties/2/spawn = true
+properties/2/replication_mode = 2
 
-[node name="LobbyPlayer" type="Label"]
+[node name="LobbyPlayer" type="HBoxContainer"]
+offset_right = 150.0
+offset_bottom = 23.0
+script = ExtResource("1_cnglf")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+
+[node name="Ready" type="Label" parent="."]
+visible = false
+modulate = Color(0.00999999, 1, 0.00999999, 1)
+layout_mode = 2
+text = "✓"
 
 [node name="Synchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_oee35")
