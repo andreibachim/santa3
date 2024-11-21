@@ -112,18 +112,25 @@ func _on_finish_line_body_entered(body: Node2D) -> void:
 	result.push_back(active_players[player.name.to_int()])
 	if result.size() == active_players.size():
 		time_left_container.visible = false
+		await get_tree().create_timer(2).timeout
 		overlay.visible = true
 		await get_tree().create_tween().tween_property(overlay, "modulate:a", 1, 0.1).finished
-		podium_camera.enabled = true
+		make_podium_camera_current.rpc()
 		await get_tree().create_tween().tween_property(overlay, "modulate:a", 0, 0.1).finished
 		# TODO move players on podium positions
-		#for p: Player in players.get_children():
-			#p.velocity.x = 0
-		#players.get_node(str(result[0].id)).global_position = first_place_marker.global_position
-		#players.get_node(str(result[1].id)).global_position = second_place_marker.global_position
-		#players.get_node(str(result[2].id)).global_position = third_place_marker.global_position
-		#for loser in result.slice(3):
-			#players.get_node(str(loser.id)).global_position = losers_maker.global_position
+		for i in result.size():
+			var r = result[i]
+			var p = players.get_node(str(r.id))
+			p.velocity.x = 0
+			match i:
+				0:
+					p.global_position = first_place_marker.global_position
+				1:
+					p.global_position = second_place_marker.global_position
+				2:
+					p.global_position = third_place_marker.global_position
+				_:
+					p.global_position = losers_maker.global_position
 
 func start_hurry_up_timer() -> void:
 	var time := 6
@@ -144,3 +151,8 @@ func start_hurry_up_timer() -> void:
 	array_of_lost_players.sort_custom(func(a,b): return a.position.x > b.position.x)
 	for p in array_of_lost_players:
 		_on_finish_line_body_entered(p)
+
+@rpc("authority", "call_local", "reliable")
+func make_podium_camera_current() -> void:
+	podium_camera.enabled = true
+	podium_camera.make_current()
