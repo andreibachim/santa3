@@ -15,10 +15,16 @@ const JUMP_VELOCITY = -200.0
 var speed = MIN_SPEED
 var direction = 1
 var jump_force = 0.0
-
 var jumping: bool = false
+var finished: bool = false
 
 func _physics_process(delta: float) -> void:
+	if finished:
+		velocity.x = lerp(velocity.x, 0.0, randi_range(1, 3) * delta)
+		if not is_on_floor():
+			velocity.y += 980 * delta
+		move_and_slide()
+		return
 	if not is_on_floor():
 		if jumping:
 			jump_force = lerp(jump_force, 0.0, 0.05)

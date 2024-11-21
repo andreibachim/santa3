@@ -8,6 +8,7 @@ func _ready() -> void:
 		camera.offset = Vector2(60, -30)
 		add_child(camera)
 		$Label.visible = true
+		z_index = 10
 		
 func _set_color(value: Color) -> void:
 	color = value
