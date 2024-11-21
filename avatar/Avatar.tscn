@@ -1,10 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://ctjp3xptp37da"]
+[gd_scene load_steps=6 format=3 uid="uid://ctjp3xptp37da"]
 
-[ext_resource type="Texture2D" uid="uid://bj8xe3r64o0lw" path="res://icon.svg" id="1_cexri"]
 [ext_resource type="Script" path="res://avatar/avatar.gd" id="2_vrdv8"]
+[ext_resource type="Texture2D" uid="uid://c020obtmb5tgh" path="res://assets/santa/santa.png" id="3_amrcx"]
 
-[sub_resource type="QuadMesh" id="QuadMesh_g485p"]
-size = Vector2(20, 30)
+[sub_resource type="AtlasTexture" id="AtlasTexture_2hts7"]
+atlas = ExtResource("3_amrcx")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k18rt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2hts7")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 0.0
+}]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_t1mic"]
 properties/0/path = NodePath(".:global_position")
@@ -14,9 +26,9 @@ properties/1/path = NodePath(".:color")
 properties/1/spawn = false
 properties/1/replication_mode = 2
 
-[node name="Avatar" type="MeshInstance2D"]
-mesh = SubResource("QuadMesh_g485p")
-texture = ExtResource("1_cexri")
+[node name="Avatar" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_k18rt")
+animation = &"idle"
 script = ExtResource("2_vrdv8")
 
 [node name="Synchronizer" type="MultiplayerSynchronizer" parent="."]

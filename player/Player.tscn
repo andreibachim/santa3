@@ -3,6 +3,8 @@
 [ext_resource type="Script" path="res://player/player.gd" id="1_lps45"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xqsjo"]
+radius = 5.0
+height = 16.0
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
