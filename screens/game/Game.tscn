@@ -1,7 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://cggeh34coe4qt"]
+[gd_scene load_steps=16 format=3 uid="uid://cggeh34coe4qt"]
 
 [ext_resource type="Script" path="res://screens/game/game.gd" id="1_jps0w"]
+[ext_resource type="Texture2D" uid="uid://cd6ro0dexjo3i" path="res://assets/backgrounds/farback.png" id="2_gbcxf"]
 [ext_resource type="PackedScene" uid="uid://qxqjpmnblj6s" path="res://ui/lobby/Lobby.tscn" id="2_s6vv1"]
+[ext_resource type="Texture2D" uid="uid://dnospyg3a7rjl" path="res://assets/backgrounds/city.png" id="3_7b8eh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a0o8r"]
 size = Vector2(20000, 40)
@@ -53,6 +55,26 @@ properties/1/replication_mode = 2
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_jps0w")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Sky" type="ParallaxLayer" parent="ParallaxBackground"]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(160, 90)
+motion_scale = Vector2(0, 0)
+
+[node name="Sky" type="Sprite2D" parent="ParallaxBackground/Sky"]
+self_modulate = Color(0.4, 0.4, 0.4, 1)
+texture = ExtResource("2_gbcxf")
+
+[node name="City" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.2, 0.1)
+motion_mirroring = Vector2(400, 0)
+
+[node name="City" type="Sprite2D" parent="ParallaxBackground/City"]
+texture = ExtResource("3_7b8eh")
+offset = Vector2(160, 80)
 
 [node name="Ground" type="StaticBody2D" parent="."]
 position = Vector2(6952, 160)
@@ -108,7 +130,7 @@ enabled = false
 replication_config = SubResource("SceneReplicationConfig_k6ytn")
 
 [node name="FinishLine" type="Area2D" parent="."]
-position = Vector2(417, 25)
+position = Vector2(1954, -2)
 collision_layer = 0
 collision_mask = 2
 script = SubResource("GDScript_hyonx")
@@ -143,6 +165,17 @@ offset_bottom = 180.0
 
 [node name="GameUILayer" type="CanvasLayer" parent="Control"]
 visible = false
+
+[node name="Snow" type="CPUParticles2D" parent="Control/GameUILayer"]
+position = Vector2(159, -37)
+amount = 96
+lifetime = 3.0
+preprocess = 3.0
+emission_shape = 3
+emission_rect_extents = Vector2(320, 1)
+gravity = Vector2(-50, 100)
+damping_min = 10.0
+damping_max = 10.0
 
 [node name="Countdown" type="Control" parent="Control/GameUILayer"]
 layout_mode = 3

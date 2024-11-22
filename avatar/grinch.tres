@@ -1,0 +1,18 @@
+[gd_resource type="SpriteFrames" load_steps=3 format=3 uid="uid://dardnpdwnbphp"]
+
+[ext_resource type="Texture2D" uid="uid://w1rfb1wbiinr" path="res://assets/grinch/grinch.png" id="1_eg8ak"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a2wkg"]
+atlas = ExtResource("1_eg8ak")
+region = Rect2(0, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a2wkg")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 0.0
+}]

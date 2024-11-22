@@ -1,0 +1,18 @@
+[gd_resource type="SpriteFrames" load_steps=3 format=3 uid="uid://dhthrvxmpwmjg"]
+
+[ext_resource type="Texture2D" uid="uid://c020obtmb5tgh" path="res://assets/santa/santa.png" id="1_f1rqr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uf0kc"]
+atlas = ExtResource("1_f1rqr")
+region = Rect2(0, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uf0kc")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 0.0
+}]

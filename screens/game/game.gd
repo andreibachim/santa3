@@ -26,7 +26,7 @@ var lobby_player_template := preload("res://ui/lobby_player/LobbyPlayer.tscn")
 @onready var overlay := $Control/GameUILayer/Overlay
 
 var player_name: String
-var colors := [Color.RED, Color.BLUE, Color.GREEN, Color.REBECCA_PURPLE]
+var characters := ["santa", "grinch", "elf", "reindeer"]
 var active_players := {}
 var result := []
 
@@ -43,18 +43,16 @@ func _ready() -> void:
 
 @rpc("any_peer", "call_remote", "reliable")
 func player_joined(nickname) -> void:
-	print("Player %s joined" % nickname)
 	var player_details = {
 		"id": multiplayer.get_remote_sender_id(),
 		"nickname": nickname,
-		"color": colors.pop_at(randi_range(0, colors.size() - 1)),
+		"character": characters.pop_at(randi_range(0, characters.size() - 1)),
 		"ready": false
 	}
 	active_players[multiplayer.get_remote_sender_id()] = player_details
 	var lobby_player_instance: LobbyPlayer = lobby_player_template.instantiate()
 	lobby_player_instance.name = str(player_details.id)
 	lobby_player_instance.text = nickname
-	lobby_player_instance.color = player_details.color
 	lobby_player_instance.is_ready = false
 	lobby_players.add_child(lobby_player_instance, true)
 
@@ -72,9 +70,9 @@ func player_ready(id: int) -> void:
 			
 			var avatar = avatar_template.instantiate()
 			avatar.name = str(ap.id)
-			avatar.color = ap.color
 			avatars.add_child(avatar, true)
-			
+			avatar.set_character.rpc(ap.character)
+
 			player.set_avatar(avatar.get_path())
 			
 			var controller = controller_template.instantiate()

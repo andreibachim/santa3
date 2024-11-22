@@ -1,0 +1,18 @@
+[gd_resource type="SpriteFrames" load_steps=3 format=3 uid="uid://ctfxbi1svl2oj"]
+
+[ext_resource type="Texture2D" uid="uid://cs24p7ggfj6so" path="res://assets/raindeer/raindeer.png" id="1_anb53"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_itgo7"]
+atlas = ExtResource("1_anb53")
+region = Rect2(0, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_itgo7")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 0.0
+}]
