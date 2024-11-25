@@ -8,6 +8,8 @@ var grinch_sprite_frame = preload("res://avatar/grinch.tres")
 var elf_sprite_frame = preload("res://avatar/elf.tres")
 var reindeer_sprite_frame = preload("res://avatar/reindeer.tres")
 
+@onready var sprite := $Sprite
+
 func _ready() -> void:
 	if multiplayer.get_unique_id() == name.to_int():
 		var camera = Camera2D.new()
@@ -15,11 +17,6 @@ func _ready() -> void:
 		add_child(camera)
 		$Label.visible = true
 		z_index = 10
-	if multiplayer.is_server():
-		print("hello")
-		print("Hello, %s" % player_path)
-		#var player: Player = get_tree().root.get_node(player_path)
-		#player.jump.connect(_jump)
 
 @rpc("authority", "call_local", "reliable")
 func set_character(value: String) -> void:
@@ -38,6 +35,12 @@ func set_character(value: String) -> void:
 @rpc("authority", "call_local", "reliable")
 func set_player_path(path: NodePath) -> void:
 	player_path = path
+	var player: Player = get_node(path)
+	player.jump.connect(_jump)
+	player.touchdown.connect(_touchdown)
 	
 func _jump() -> void:
-	print("should print")
+	sprite.animation = "jump"
+	
+func _touchdown() -> void:
+	sprite.animation = "idle"
