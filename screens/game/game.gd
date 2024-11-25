@@ -72,6 +72,7 @@ func player_ready(id: int) -> void:
 			avatar.name = str(ap.id)
 			avatars.add_child(avatar, true)
 			avatar.set_character.rpc(ap.character)
+			avatar.set_player_path(player.get_path())
 
 			player.set_avatar(avatar.get_path())
 			

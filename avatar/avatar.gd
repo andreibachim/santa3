@@ -1,5 +1,6 @@
 extends Node2D
 
+var player_path: NodePath
 var character: String: set = set_character
 
 var santa_sprite_frame = preload("res://avatar/santa.tres")
@@ -14,9 +15,16 @@ func _ready() -> void:
 		add_child(camera)
 		$Label.visible = true
 		z_index = 10
+	if multiplayer.is_server():
+		print("hello")
+		print("Hello, %s" % player_path)
+		#var player: Player = get_tree().root.get_node(player_path)
+		#player.jump.connect(_jump)
 
 @rpc("authority", "call_local", "reliable")
 func set_character(value: String) -> void:
+	$Sprite.sprite_frames = santa_sprite_frame
+	return
 	match value:
 		"santa":
 			$Sprite.sprite_frames = santa_sprite_frame
@@ -26,3 +34,10 @@ func set_character(value: String) -> void:
 			$Sprite.sprite_frames = elf_sprite_frame
 		"reindeer":
 			$Sprite.sprite_frames = reindeer_sprite_frame
+
+@rpc("authority", "call_local", "reliable")
+func set_player_path(path: NodePath) -> void:
+	player_path = path
+	
+func _jump() -> void:
+	print("should print")

@@ -1,18 +1,63 @@
-[gd_resource type="SpriteFrames" load_steps=3 format=3 uid="uid://dhthrvxmpwmjg"]
+[gd_resource type="SpriteFrames" load_steps=8 format=3 uid="uid://dhthrvxmpwmjg"]
 
 [ext_resource type="Texture2D" uid="uid://c020obtmb5tgh" path="res://assets/santa/santa.png" id="1_f1rqr"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_uf0kc"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_fpcq8"]
 atlas = ExtResource("1_f1rqr")
-region = Rect2(0, 0, 64, 64)
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rmhah"]
+atlas = ExtResource("1_f1rqr")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jt8c7"]
+atlas = ExtResource("1_f1rqr")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hkawr"]
+atlas = ExtResource("1_f1rqr")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rkr21"]
+atlas = ExtResource("1_f1rqr")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wa4ua"]
+atlas = ExtResource("1_f1rqr")
+region = Rect2(160, 0, 32, 32)
 
 [resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_uf0kc")
+"texture": SubResource("AtlasTexture_fpcq8")
 }],
 "loop": false,
 "name": &"idle",
 "speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rmhah")
+}],
+"loop": false,
+"name": &"jump",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jt8c7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hkawr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rkr21")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wa4ua")
+}],
+"loop": true,
+"name": &"move",
+"speed": 5.0
 }]

@@ -1,18 +1,63 @@
-[gd_resource type="SpriteFrames" load_steps=3 format=3 uid="uid://dardnpdwnbphp"]
+[gd_resource type="SpriteFrames" load_steps=8 format=3 uid="uid://dardnpdwnbphp"]
 
 [ext_resource type="Texture2D" uid="uid://w1rfb1wbiinr" path="res://assets/grinch/grinch.png" id="1_eg8ak"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_a2wkg"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_11h73"]
 atlas = ExtResource("1_eg8ak")
-region = Rect2(0, 0, 64, 64)
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yka28"]
+atlas = ExtResource("1_eg8ak")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5uy1e"]
+atlas = ExtResource("1_eg8ak")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ginm1"]
+atlas = ExtResource("1_eg8ak")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n2jds"]
+atlas = ExtResource("1_eg8ak")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kxu0e"]
+atlas = ExtResource("1_eg8ak")
+region = Rect2(160, 0, 32, 32)
 
 [resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_a2wkg")
+"texture": SubResource("AtlasTexture_11h73")
 }],
 "loop": false,
 "name": &"idle",
 "speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yka28")
+}],
+"loop": false,
+"name": &"jump",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5uy1e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ginm1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2jds")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kxu0e")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
 }]
