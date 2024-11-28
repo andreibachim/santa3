@@ -1,7 +1,7 @@
 extends Node2D
 
-var player_path: NodePath
 var character: String: set = set_character
+var player: Player
 
 var santa_sprite_frame = preload("res://avatar/santa.tres")
 var grinch_sprite_frame = preload("res://avatar/grinch.tres")
@@ -17,6 +17,10 @@ func _ready() -> void:
 		add_child(camera)
 		$Label.visible = true
 		z_index = 10
+		
+func _process(_delta: float) -> void:
+	if not multiplayer.is_server(): return
+	if player == null: return
 
 @rpc("authority", "call_local", "reliable")
 func set_character(value: String) -> void:
@@ -34,13 +38,16 @@ func set_character(value: String) -> void:
 
 @rpc("authority", "call_local", "reliable")
 func set_player_path(path: NodePath) -> void:
-	player_path = path
-	var player: Player = get_node(path)
+	player = get_node(path)
 	player.jump.connect(_jump)
 	player.touchdown.connect(_touchdown)
+	player.idle.connect(_idle)
 	
 func _jump() -> void:
 	sprite.animation = "jump"
 	
 func _touchdown() -> void:
+	sprite.animation = "move"
+	
+func _idle() -> void:
 	sprite.animation = "idle"
