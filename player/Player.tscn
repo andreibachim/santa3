@@ -1,6 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://ojx6sp1sa4er"]
+[gd_scene load_steps=7 format=3 uid="uid://ojx6sp1sa4er"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_lps45"]
+[ext_resource type="Script" path="res://player/state/state_machine.gd" id="2_de7dk"]
+[ext_resource type="Script" path="res://player/state/moving.gd" id="4_iu0uf"]
+[ext_resource type="Script" path="res://player/state/idle.gd" id="4_vqfid"]
+[ext_resource type="Script" path="res://player/state/jump.gd" id="5_qtoln"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xqsjo"]
 height = 32.0
@@ -17,5 +21,17 @@ remote_path = NodePath("..")
 update_rotation = false
 update_scale = false
 
-[connection signal="jump" from="." to="." method="_on_jump"]
-[connection signal="stop_jump" from="." to="." method="_on_stop_jump"]
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("2_de7dk")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("player")]
+script = ExtResource("4_vqfid")
+player = NodePath("../..")
+
+[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("player")]
+script = ExtResource("4_iu0uf")
+player = NodePath("../..")
+
+[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("player")]
+script = ExtResource("5_qtoln")
+player = NodePath("../..")

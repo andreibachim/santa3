@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ctjp3xptp37da"]
 
-[ext_resource type="SpriteFrames" uid="uid://dhthrvxmpwmjg" path="res://avatar/santa.tres" id="2_v5cka"]
+[ext_resource type="SpriteFrames" uid="uid://ctfxbi1svl2oj" path="res://avatar/reindeer.tres" id="2_jucw4"]
 [ext_resource type="Script" path="res://avatar/avatar.gd" id="2_vrdv8"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_t1mic"]
@@ -19,9 +19,9 @@ script = ExtResource("2_vrdv8")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2, 2)
-sprite_frames = ExtResource("2_v5cka")
-animation = &"move"
-autoplay = "move"
+sprite_frames = ExtResource("2_jucw4")
+animation = &"idle"
+autoplay = "idle"
 
 [node name="Synchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_t1mic")

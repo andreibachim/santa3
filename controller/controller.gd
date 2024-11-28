@@ -20,9 +20,8 @@ func _physics_process(_delta: float) -> void:
 @rpc("authority", "call_remote", "reliable")
 func jump() -> void:
 	var player: Player = get_node(player_path)
-	player.jump.emit()
+	player.start_jump.emit()
 	
 @rpc("authority", "call_remote", "reliable")
 func stop_jump() -> void:
-	var player: Player = get_node(player_path)
-	player.stop_jump.emit()
+	var _player: Player = get_node(player_path)

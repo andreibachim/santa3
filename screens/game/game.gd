@@ -101,18 +101,16 @@ func start_game() -> void:
 func free_barrier() -> void:
 	if multiplayer.is_server():
 		for p: Player in players.get_children():
-			p.started = true
+			p.start_moving()
 	barrier.queue_free()
 	await get_tree().create_tween().tween_property($Control/GameUILayer/Countdown, "modulate:a", 0, 1).finished
 	$Control/GameUILayer/Countdown.queue_free()
-
 
 func _on_finish_line_body_entered(body: Node2D) -> void:
 	if result.is_empty():
 		start_hurry_up_timer()
 	var player: Player = body as Player
-	player.finished = true
-	player.idle.emit()
+	player.start_idling()
 	result.push_back(active_players[player.name.to_int()])
 	if result.size() == active_players.size():
 		time_left_container.visible = false

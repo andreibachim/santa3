@@ -1,29 +1,29 @@
 [gd_resource type="SpriteFrames" load_steps=8 format=3 uid="uid://ctfxbi1svl2oj"]
 
-[ext_resource type="Texture2D" uid="uid://cs24p7ggfj6so" path="res://assets/raindeer/raindeer.png" id="1_xdqhi"]
+[ext_resource type="Texture2D" uid="uid://cs24p7ggfj6so" path="res://assets/reindeer/reindeer.png" id="1_ucmxj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6paaw"]
-atlas = ExtResource("1_xdqhi")
+atlas = ExtResource("1_ucmxj")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5sax8"]
-atlas = ExtResource("1_xdqhi")
+atlas = ExtResource("1_ucmxj")
 region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jydy8"]
-atlas = ExtResource("1_xdqhi")
+[sub_resource type="AtlasTexture" id="AtlasTexture_wnalu"]
+atlas = ExtResource("1_ucmxj")
 region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_la3qy"]
-atlas = ExtResource("1_xdqhi")
+[sub_resource type="AtlasTexture" id="AtlasTexture_3aly0"]
+atlas = ExtResource("1_ucmxj")
 region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ctfia"]
-atlas = ExtResource("1_xdqhi")
+[sub_resource type="AtlasTexture" id="AtlasTexture_gtfhi"]
+atlas = ExtResource("1_ucmxj")
 region = Rect2(128, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_x1via"]
-atlas = ExtResource("1_xdqhi")
+[sub_resource type="AtlasTexture" id="AtlasTexture_0e27i"]
+atlas = ExtResource("1_ucmxj")
 region = Rect2(160, 0, 32, 32)
 
 [resource]
@@ -46,18 +46,18 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_jydy8")
+"texture": SubResource("AtlasTexture_wnalu")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_la3qy")
+"texture": SubResource("AtlasTexture_3aly0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ctfia")
+"texture": SubResource("AtlasTexture_gtfhi")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_x1via")
+"texture": SubResource("AtlasTexture_0e27i")
 }],
 "loop": true,
-"name": &"run",
-"speed": 5.0
+"name": &"move",
+"speed": 10.0
 }]
