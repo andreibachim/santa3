@@ -8,7 +8,7 @@ var grinch_sprite_frame: SpriteFrames = preload("res://avatar/grinch.tres")
 var elf_sprite_frame: SpriteFrames = preload("res://avatar/elf.tres")
 var reindeer_sprite_frame: SpriteFrames = preload("res://avatar/reindeer.tres")
 
-@onready var sprite := $Sprite
+var sprite: AnimatedSprite2D
 
 func _ready() -> void:
 	if multiplayer.get_unique_id() == name.to_int():
@@ -17,14 +17,6 @@ func _ready() -> void:
 		add_child(camera)
 		$Label.visible = true
 		z_index = 10
-		santa_sprite_frame.set_animation_loop("move", true)
-		santa_sprite_frame.set_animation_speed("move", 10)
-		grinch_sprite_frame.set_animation_loop("move", true)
-		grinch_sprite_frame.set_animation_speed("move", 10)
-		elf_sprite_frame.set_animation_loop("move", true)
-		elf_sprite_frame.set_animation_speed("move", 10)
-		reindeer_sprite_frame.set_animation_loop("move", true)
-		reindeer_sprite_frame.set_animation_speed("move", 10)
 		
 func _process(_delta: float) -> void:
 	if not multiplayer.is_server(): return
@@ -34,13 +26,15 @@ func _process(_delta: float) -> void:
 func set_character(value: String) -> void:
 	match value:
 		"santa":
-			$Sprite.sprite_frames = santa_sprite_frame
+			sprite = $SantaSprite
 		"grinch":
-			$Sprite.sprite_frames = grinch_sprite_frame
+			sprite = $GrinchSprite
 		"elf":
-			$Sprite.sprite_frames = elf_sprite_frame
+			sprite = $ElfSprite
 		"reindeer":
-			$Sprite.sprite_frames = reindeer_sprite_frame
+			sprite = $ReindeerSprite
+	sprite.name = "Sprite"
+	sprite.visible = true
 
 @rpc("authority", "call_local", "reliable")
 func set_player_path(path: NodePath) -> void:
@@ -51,9 +45,13 @@ func set_player_path(path: NodePath) -> void:
 	
 func _jump() -> void:
 	sprite.animation = "jump"
-	
+	#santa_sprite_frame.set_animation_loop("move", true)
+	#santa_sprite_frame.set_animation_speed("move", 10)
 func _move() -> void:
 	sprite.animation = "move"
+	var frames = sprite.sprite_frames
+	frames.set_animation_loop("move", true)
+	frames.set_animation_speed("move", 10)
 
 func _idle() -> void:
 	sprite.animation = "idle"
